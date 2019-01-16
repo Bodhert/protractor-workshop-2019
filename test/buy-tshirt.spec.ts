@@ -23,6 +23,5 @@ describe('When I try to buy a t-shirt', () => {
     await menuContentPage.goToTShirtMenu();
     await productListPage.addToCart('Faded Short Sleeve T-shirts');
     await productAddedModalPage.proceedToCheckout();
-    console.log('dfsadf');
   });
 });
