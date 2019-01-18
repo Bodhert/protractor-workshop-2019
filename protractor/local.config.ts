@@ -7,6 +7,7 @@ export const config: Config = {
   getPageTimeout: 3000,
   SELENIUM_PROMISE_MANAGER: false,
   onPrepare: () => {
+    browser.manage().timeouts().implicitlyWait(0);
     browser.ignoreSynchronization = true;
     reporter();
   },
