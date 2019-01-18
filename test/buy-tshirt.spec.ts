@@ -17,10 +17,6 @@ describe('Given the shopping page', () => {
     await browser.get('http://automationpractice.com/');
   });
 
-  beforeEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 120000;
-  });
-
   describe('When we want to buy a t-shirt', async () => {
     beforeAll(async () => {
       const menuContentPage: MenuContentPage = new MenuContentPage();
