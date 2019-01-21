@@ -7,7 +7,7 @@ export class ProductListPage {
     this.products = $$('.product-container');
   }
 
-  private findByProductByName(productName: string): ElementFinder {
+  private findProductByName(productName: string): ElementFinder {
     return this.products
       .filter((itemDescription: ElementFinder) =>
         itemDescription
@@ -18,7 +18,7 @@ export class ProductListPage {
   }
 
   public async addToCart(productName: string): Promise<void> {
-    const card = this.findByProductByName(productName);
+    const card = this.findProductByName(productName);
 
     await browser.actions().mouseMove(card.$('img')).perform();
     await card.$('.ajax_add_to_cart_button.btn.btn-default').click();
