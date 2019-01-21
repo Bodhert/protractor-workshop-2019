@@ -9,7 +9,7 @@ export class ShippingStepPage {
     this.proceedToCheckOut = $('button[name="processCarrier"]');
   }
 
-  public async acceptAndContinue(): Promise<void> {
+  public async acceptTermsAndProceedCheckout(): Promise<void> {
     await this.agreeTermsCheckBox.click();
     await this.proceedToCheckOut.click();
   }

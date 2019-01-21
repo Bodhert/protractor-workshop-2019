@@ -30,56 +30,53 @@ describe('Given the shopping page', () => {
       await summaryStepPage.proceedToCheckout();
 
     });
-  });
 
-  describe('And login to the application', () => {
-    beforeAll(async () => {
-      const signInStepPage: SignInStepPage = new SignInStepPage();
+    describe('And login to the application', () => {
+      beforeAll(async () => {
+        const signInStepPage: SignInStepPage = new SignInStepPage();
 
-      await signInStepPage.login('aperdomobo@gmail.com', 'WorkshopProtractor');
+        await signInStepPage.login('aperdomobo@gmail.com', 'WorkshopProtractor');
+      });
+
+      describe('and select the default address of delivery', () => {
+        beforeAll(async () => {
+          const addressStepPage: AddressStepPage = new AddressStepPage();
+
+          await addressStepPage.proceedToCheckout();
+        });
+
+        describe('and proceed the default shiping options', () => {
+          beforeAll(async () => {
+            const shippingStepPage: ShippingStepPage = new ShippingStepPage();
+
+            await shippingStepPage.acceptTermsAndProceedCheckout();
+          });
+          describe('and select to pay by bank wire option', () => {
+            beforeAll(async () => {
+              const paymentStepPage: PaymentStepPage = new PaymentStepPage();
+
+              await paymentStepPage.payByBankWire();
+            });
+
+            describe('and pay to the bank', () => {
+              beforeAll(async () => {
+                const bankPaymentPage: BankPaymentPage = new BankPaymentPage();
+
+                await bankPaymentPage.confirmOrder();
+              });
+
+              it('then the shirt should be bougth', () => {
+                beforeAll(async () => {
+                  const orderResumePage: OrderResumePage = new OrderResumePage();
+
+                  await expect(orderResumePage.getOrderTitle())
+                    .toBe('Your order on My Store is complete.');
+                });
+              });
+            });
+          });
+        });
+      });
     });
   });
-
-  // from this point on, the code has not been tested
-  describe('and select the default address of delivery', () => {
-    beforeAll(async () => {
-      const addressStepPage: AddressStepPage = new AddressStepPage();
-
-      await addressStepPage.proceedToCheckout();
-    });
-  });
-
-  describe('and proceed the default shiping options', () => {
-    beforeAll(async () => {
-      const shippingStepPage: ShippingStepPage = new ShippingStepPage();
-
-      await shippingStepPage.acceptAndContinue();
-    });
-  });
-
-  describe('and select to pay by bank wire option', () => {
-    beforeAll(async () => {
-      const paymentStepPage: PaymentStepPage = new PaymentStepPage();
-
-      await paymentStepPage.payByBankWire();
-    });
-  });
-
-  describe('and pay to the bank', () => {
-    beforeAll(async () => {
-      const bankPaymentPage: BankPaymentPage = new BankPaymentPage();
-
-      await bankPaymentPage.confirmOrder();
-    });
-  });
-
-  it('then the shirt should be bougth', () => {
-    beforeAll(async () => {
-      const orderResumePage: OrderResumePage = new OrderResumePage();
-
-      await expect(orderResumePage.getOrderTitle())
-        .toBe('Your order on My Store is complete.');
-    });
-  });
-
 });
