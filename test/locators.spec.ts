@@ -15,11 +15,12 @@ describe('Given the page to practice automation', () => {
         lastName: 'Perdomo',
         sex: 'Male',
         experience: 7,
+        date: '2019',
         professions: ['Automation Tester'],
+        file: '/home/acordobab/Risitas.jpg',
+        downloadFile: true,
         tools: ['Selenium Webdriver'],
         continent: 'South America',
-        file: './resources/photo.jpg',
-        downloadFile: true,
         commands: [
           'Browser Commands',
           'Navigation Commands',
@@ -29,7 +30,7 @@ describe('Given the page to practice automation', () => {
       });
     });
 
-    it('the form should be filled', async () => {
+    it('the page should have the title', async () => {
       expect(await personalInformationPage.getPageTitle()).toBe('Practice Automation Form');
     });
 

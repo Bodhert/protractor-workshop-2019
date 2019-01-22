@@ -1,15 +1,15 @@
 import { Config, browser } from 'protractor';
 import { reporter } from './helpers/reporter';
 
-export let config: Config = {
+export const config: Config = {
   framework: 'jasmine',
-  specs: ['../test/**/*.spec.js'],
+  specs: ['../test/**/locators.spec.js'], // dont forget to put It default
   SELENIUM_PROMISE_MANAGER: false,
   noGlobals: true,
   getPageTimeout: 30000,
   capabilities: {
     browserName: 'chrome',
-    shardTestFiles: true,
+    shardTestFiles: false, // set to true to parallel execution, but not good for single debuging
     maxInstances: 2,
     chromeOptions: {
       args: ['disable-infobars=true', '--window-size=800,600'],
