@@ -18,7 +18,7 @@ describe('Given the page to practice automation', () => {
         experience: 7,
         date: '2019',
         professions: ['Automation Tester'],
-        file: '/home/acordobab/Risitas.jpg',
+        file: './resources/Risitas.jpg',
         downloadFile: true,
         tools: ['Selenium Webdriver'],
         continent: 'South America',
