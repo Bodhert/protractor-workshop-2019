@@ -1,5 +1,6 @@
 import { browser } from 'protractor';
 import { PersonalInformationPage } from '../src/page';
+import { DownloadService } from '../src/service';
 
 describe('Given the page to practice automation', () => {
   beforeAll(async () => {
@@ -34,5 +35,14 @@ describe('Given the page to practice automation', () => {
       expect(await personalInformationPage.getPageTitle()).toBe('Practice Automation Form');
     });
 
+    it('the picture should be uploaded', async () => {
+      expect(await personalInformationPage.getPictureName()).toBe('Risitas.jpg');
+    });
+
+    it('then the file should be downloaded', async () => {
+      const service = new DownloadService();
+      const file = await service.readFileFromTemp('test-document.xlsx');
+      expect(file.byteLength).toBeGreaterThanOrEqual(8000);
+    });
   });
 });

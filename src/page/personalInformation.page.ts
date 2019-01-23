@@ -78,8 +78,6 @@ export class PersonalInformationPage {
     for (const commandName of form.commands) {
       await this.selectSeleniumCommands(commandName).click();
     }
-
-    console.log('debug');
   }
 
   private sexOption(gender: string): ElementFinder {
@@ -120,5 +118,10 @@ export class PersonalInformationPage {
 
   private selectSeleniumCommands(commandName: string): ElementFinder {
     return this.seleniumCommandsOptions.element(by.cssContainingText('option', commandName));
+  }
+
+  public async getPictureName(): Promise<string> {
+    const fullPath: string = await this.uploadProfilePicture.getAttribute('value');
+    return fullPath.split(/(\\|\/)/g).pop();
   }
 }
