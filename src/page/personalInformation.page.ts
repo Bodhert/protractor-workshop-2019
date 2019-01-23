@@ -26,6 +26,8 @@ export class PersonalInformationPage {
   private dateField: ElementFinder;
   private uploadProfilePicture: ElementFinder;
   private downloadLink: ElementFinder;
+  private continentOption: ElementFinder;
+  private seleniumCommandsOptions: ElementFinder;
 
   constructor() {
     this.firstNameField = element(by.name('firstname'));
@@ -35,6 +37,8 @@ export class PersonalInformationPage {
     this.dateField = element(by.id('datepicker'));
     this.uploadProfilePicture = element(by.id('photo'));
     this.downloadLink = element(by.linkText('Test File to Download'));
+    this.continentOption = element(by.id('continents'));
+    this.seleniumCommandsOptions = element(by.id('selenium_commands'));
   }
 
   public async getPageTitle(): Promise<string> {
@@ -68,6 +72,14 @@ export class PersonalInformationPage {
     for (const tool of form.tools) {
       await this.selectTools(tool).click;
     }
+
+    await this.selectContinent(form.continent).click();
+
+    for (const commandName of form.commands) {
+      await this.selectSeleniumCommands(commandName).click();
+    }
+
+    console.log('debug');
   }
 
   private sexOption(gender: string): ElementFinder {
@@ -100,5 +112,13 @@ export class PersonalInformationPage {
     const link = await this.downloadLink.getAttribute('href');
     const service = new DownloadService();
     await service.downloadFile(link, 'test-document.xlsx');
+  }
+
+  private selectContinent(continentName: string) {
+    return this.continentOption.element(by.cssContainingText('option', continentName));
+  }
+
+  private selectSeleniumCommands(commandName: string): ElementFinder {
+    return this.seleniumCommandsOptions.element(by.cssContainingText('option', commandName));
   }
 }
