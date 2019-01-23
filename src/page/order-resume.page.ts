@@ -1,10 +1,11 @@
-import { $, ElementFinder } from 'protractor';
+import { element, ElementFinder, by } from 'protractor';
 
 export class OrderResumePage {
   private orderTitleLabel: ElementFinder;
 
   constructor() {
-    this.orderTitleLabel = $('cheque-indent.strong.dark');
+    this.orderTitleLabel =
+      element(by.cssContainingText('strong', 'Your order on My Store is complete.'));
   }
 
   public async getOrderTitle(): Promise<string> {
