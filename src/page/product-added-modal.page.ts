@@ -1,11 +1,11 @@
-import { $, ElementFinder, ExpectedConditions, browser } from 'protractor';
+import { ElementFinder, ExpectedConditions, browser, element, by } from 'protractor';
 
 export class ProductAddedModalPage {
   private proceedToChekoutButton: ElementFinder;
 
   constructor() {
-    this.proceedToChekoutButton = $('[style*="display: block;"] .button-container > a.btn.' +
-      'btn-default.button.button-medium');
+    const proceedToChekoutReg = new RegExp('Proceed to checkout*');
+    this.proceedToChekoutButton = element(by.cssContainingText('span', proceedToChekoutReg));
   }
 
   public async proceedToCheckout(): Promise<void> {
