@@ -1,13 +1,14 @@
-import { $, ElementFinder } from 'protractor';
+import { ElementFinder, element, by } from 'protractor';
 
 export class SummaryStepPage {
-  private proceedToCheckoutButton : ElementFinder;
+  private proceedToCheckoutButton: ElementFinder;
 
   constructor() {
-    this.proceedToCheckoutButton = $('a.button.btn.btn-default.standard-checkout.button-medium');
+    this.proceedToCheckoutButton =
+      element(by.css('a.standard-checkout[title="Proceed to checkout"]'));
   }
 
-  public async proceedToCheckout(): Promise <void> {
+  public async proceedToCheckout(): Promise<void> {
     await this.proceedToCheckoutButton.click();
   }
 }
