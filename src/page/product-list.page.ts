@@ -1,4 +1,4 @@
-import { $$, ElementFinder, ElementArrayFinder, browser } from 'protractor';
+import { $$, ElementFinder, ElementArrayFinder, by } from 'protractor';
 
 export class ProductListPage {
   private products: ElementArrayFinder;
@@ -20,7 +20,6 @@ export class ProductListPage {
   public async addToCart(productName: string): Promise<void> {
     const card = this.findProductByName(productName);
 
-    await browser.actions().mouseMove(card.$('img')).perform();
-    await card.$('.ajax_add_to_cart_button.btn.btn-default').click();
+    await card.element(by.cssContainingText('span', 'Add to cart')).click();
   }
 }
