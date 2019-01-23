@@ -4,7 +4,7 @@ export class BankPaymentPage {
   private confirmOrderButton: ElementFinder;
 
   constructor() {
-    this.confirmOrderButton = element(by.css('button.btn.btn-default.button-medium'));
+    this.confirmOrderButton = element(by.cssContainingText('span', 'I confirm my order'));
   }
 
   public async confirmOrder(): Promise<void> {
