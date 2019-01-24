@@ -58,7 +58,14 @@ export class PersonalInformationPage {
     await this.dateField.sendKeys(form.date);
     await this.selectContinent(form.continent).click();
 
-    this.fileFormTester(form);
+    // this.fileFormTester(form);
+    if (form.file) {
+      await this.uploadFile(form.file);
+    }
+
+    if (form.downloadFile) {
+      await this.downloadFileByLink();
+    }
     this.fillMultipleChoiseFields(form);
   }
 
@@ -107,15 +114,15 @@ export class PersonalInformationPage {
     return fullPath.split(/(\\|\/)/g).pop();
   }
 
-  private async fileFormTester(form: PersonalInformation): Promise<void> {
-    if (form.file) {
-      await this.uploadFile(form.file);
-    }
+  // private async fileFormTester(form: PersonalInformation): Promise<void> {
+  //   if (form.file) {
+  //     await this.uploadFile(form.file);
+  //   }
 
-    if (form.downloadFile) {
-      await this.downloadFileByLink();
-    }
-  }
+  //   if (form.downloadFile) {
+  //     await this.downloadFileByLink();
+  //   }
+  // }
 
   private async fillMultipleChoiseFields(form: PersonalInformation): Promise<void> {
     for (const profession of form.professions) {
