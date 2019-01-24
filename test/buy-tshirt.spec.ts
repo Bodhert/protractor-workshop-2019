@@ -63,11 +63,9 @@ describe('Given the shopping page', () => {
                 await bankPaymentPage.confirmOrder();
               });
 
-              it('then the shirt should be bougth', () => {
-                beforeAll(async () => {
-                  await expect(orderResumePage.getOrderTitle())
-                    .toBe('Your order on My Store is complete.');
-                });
+              it('then the shirt should be bougth', async () => {
+                expect(await expect(orderResumePage.getOrderTitle())
+                  .toBe('Your order on My Store is complete.'));
               });
             });
           });
