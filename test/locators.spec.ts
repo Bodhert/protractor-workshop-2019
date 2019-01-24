@@ -7,15 +7,15 @@ describe('Given the page to practice automation', () => {
     await browser.get('http://toolsqa.com/automation-practice-form/');
   });
 
-  describe('when I am training locators', () => {
+  describe('When I am training locators', () => {
     const personalInformationPage = new PersonalInformationPage();
 
     beforeAll(async () => {
       await personalInformationPage.fillForm({
         firstName: 'Alejandro',
-        lastName: 'Perdomo',
+        lastName: 'Cordoba',
         sex: 'Male',
-        experience: 7,
+        experience: 1,
         date: '2019',
         professions: ['Automation Tester'],
         file: './resources/Risitas.jpg',
@@ -31,15 +31,15 @@ describe('Given the page to practice automation', () => {
       });
     });
 
-    it('the page should have the title', async () => {
+    it('Then the page should have the title', async () => {
       expect(await personalInformationPage.getPageTitle()).toBe('Practice Automation Form');
     });
 
-    it('the picture should be uploaded', async () => {
+    it('Then the picture should be uploaded', async () => {
       expect(await personalInformationPage.getPictureName()).toBe('Risitas.jpg');
     });
 
-    it('then the file should be downloaded', async () => {
+    it('Then the file should be downloaded', async () => {
       const service = new DownloadService();
       const file = await service.readFileFromTemp('test-document.xlsx');
       expect(file.byteLength).toBeGreaterThanOrEqual(8000);

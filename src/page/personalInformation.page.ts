@@ -56,28 +56,10 @@ export class PersonalInformationPage {
     await this.sexOption(form.sex).click();
     await this.selectYearsOfExperience(form.experience).click();
     await this.dateField.sendKeys(form.date);
-
-    for (const profession of form.professions) {
-      await this.selectProfession(profession).click();
-    }
-
-    if (form.file) {
-      await this.uploadFile(form.file);
-    }
-
-    if (form.downloadFile) {
-      await this.downloadFileByLink();
-    }
-
-    for (const tool of form.tools) {
-      await this.selectTools(tool).click;
-    }
-
     await this.selectContinent(form.continent).click();
 
-    for (const commandName of form.commands) {
-      await this.selectSeleniumCommands(commandName).click();
-    }
+    this.fileFormTester(form);
+    this.fillMultipleChoiseFields(form);
   }
 
   private sexOption(gender: string): ElementFinder {
@@ -123,5 +105,29 @@ export class PersonalInformationPage {
   public async getPictureName(): Promise<string> {
     const fullPath: string = await this.uploadProfilePicture.getAttribute('value');
     return fullPath.split(/(\\|\/)/g).pop();
+  }
+
+  private async fileFormTester(form: PersonalInformation): Promise<void> {
+    if (form.file) {
+      await this.uploadFile(form.file);
+    }
+
+    if (form.downloadFile) {
+      await this.downloadFileByLink();
+    }
+  }
+
+  private async fillMultipleChoiseFields(form: PersonalInformation): Promise<void> {
+    for (const profession of form.professions) {
+      await this.selectProfession(profession).click();
+    }
+
+    for (const tool of form.tools) {
+      await this.selectTools(tool).click;
+    }
+
+    for (const commandName of form.commands) {
+      await this.selectSeleniumCommands(commandName).click();
+    }
   }
 }
