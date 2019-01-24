@@ -6,6 +6,7 @@ export const config: Config = {
   specs: ['../test/**/*.spec.js'],
   SELENIUM_PROMISE_MANAGER: false,
   onPrepare: () => {
+    browser.manage().timeouts().implicitlyWait(0);
     browser.ignoreSynchronization = true;
     reporter();
   },
@@ -14,5 +15,8 @@ export const config: Config = {
     chromeOptions: {
       args: ['--headless', '--disable-gpu']
     }
+  },
+  jasmineNodeOpts: {
+    defaultTimeoutInterval: 120000
   }
 };

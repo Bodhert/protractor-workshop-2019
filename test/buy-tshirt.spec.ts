@@ -1,42 +1,76 @@
-import { $, browser } from 'protractor';
+import { browser } from 'protractor';
+import {
+  MenuContentPage,
+  ProductListPage,
+  ProductAddedModalPage,
+  SummaryStepPage,
+  SignInStepPage,
+  AddressStepPage,
+  ShippingStepPage,
+  PaymentStepPage,
+  BankPaymentPage,
+  OrderResumePage
+} from '../src/page';
 
-describe('When I try to buy a t-shirt', () => {
-
-  beforeEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 120000;
+describe('Given the shopping page', () => {
+  beforeAll(async () => {
+    await browser.get('http://automationpractice.com/');
   });
 
-  it('Then a t-shirt should be bought', async () => {
-    await browser.get('http://automationpractice.com/');
-    await(browser.sleep(10000));
-    await $('#block_top_menu > ul > li:nth-child(3) > a').click();
-    await(browser.sleep(3000));
-    await $('#center_column a.button.ajax_add_to_cart_button.btn.btn-default').click();
-    await(browser.sleep(3000));
-    await $('[style*="display: block;"] .button-container > a').click();
-    await(browser.sleep(3000));
-    await $('.cart_navigation span').click();
-    await(browser.sleep(3000));
+  describe('When we want to buy a t-shirt', async () => {
+    const menuContentPage: MenuContentPage = new MenuContentPage();
+    const productListPage: ProductListPage = new ProductListPage();
+    const productAddedModalPage: ProductAddedModalPage = new ProductAddedModalPage();
+    const summaryStepPage: SummaryStepPage = new SummaryStepPage();
 
-    await $('#email').sendKeys('aperdomobo@gmail.com');
-    await $('#passwd').sendKeys('WorkshopProtractor');
-    await $('#SubmitLogin > span').click();
-    await(browser.sleep(3000));
+    beforeAll(async () => {
+      await menuContentPage.goToTShirtMenu();
+      await productListPage.addToCart('Faded Short Sleeve T-shirts');
+      await productAddedModalPage.proceedToCheckout();
+      await summaryStepPage.proceedToCheckout();
+    });
 
-    await $('#center_column > form > p > button > span').click();
-    await(browser.sleep(3000));
+    describe('And login to the application', () => {
+      const signInStepPage: SignInStepPage = new SignInStepPage();
 
-    await $('#cgv').click();
-    await(browser.sleep(3000));
+      beforeAll(async () => {
+        await signInStepPage.login('aperdomobo@gmail.com', 'WorkshopProtractor');
+      });
 
-    await $('#form > p > button > span').click();
-    await(browser.sleep(3000));
-    await $('#HOOK_PAYMENT > div:nth-child(1) > div > p > a').click();
-    await(browser.sleep(3000));
-    await $('#cart_navigation > button > span').click();
-    await(browser.sleep(3000));
+      describe('and select the default address of delivery', () => {
+        const addressStepPage: AddressStepPage = new AddressStepPage();
+        beforeAll(async () => {
+          await addressStepPage.proceedToCheckout();
+        });
 
-    await expect($('#center_column > div > p > strong').getText())
-      .toBe('Your order on My Store is complete.');
+        describe('and proceed the default shiping options', () => {
+          const shippingStepPage: ShippingStepPage = new ShippingStepPage();
+
+          beforeAll(async () => {
+            await shippingStepPage.acceptTermsAndProceedCheckout();
+          });
+
+          describe('and select to pay by bank wire option', () => {
+            const paymentStepPage: PaymentStepPage = new PaymentStepPage();
+            beforeAll(async () => {
+              await paymentStepPage.payByBankWire();
+            });
+
+            describe('and pay to the bank', () => {
+              const bankPaymentPage: BankPaymentPage = new BankPaymentPage();
+              const orderResumePage: OrderResumePage = new OrderResumePage();
+              beforeAll(async () => {
+                await bankPaymentPage.confirmOrder();
+              });
+
+              it('then the shirt should be bougth', async () => {
+                expect(await expect(orderResumePage.getOrderTitle())
+                  .toBe('Your order on My Store is complete.'));
+              });
+            });
+          });
+        });
+      });
+    });
   });
 });
