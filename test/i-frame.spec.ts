@@ -2,6 +2,7 @@ import { IFramePage, PersonalInformationPage } from '../src/page';
 import { browser } from 'protractor';
 
 describe('Given a page with Iframe', () => {
+
   const iframe = new IFramePage();
 
   beforeAll(async () => {
@@ -12,7 +13,7 @@ describe('Given a page with Iframe', () => {
     expect(await iframe.getSampleTitle()).toBe('Sample Iframe page');
   });
 
-  describe('And switch to the Iframe', () => {
+  describe('When switch to the Iframe', () => {
 
     const personalInformationPage = new PersonalInformationPage();
 
@@ -24,13 +25,16 @@ describe('Given a page with Iframe', () => {
       expect(await personalInformationPage.getPageTitle()).toBe('Practice Automation Form');
     });
 
-    describe('Then switch to main page', () => {
+    describe('When switch to main page', () => {
+      let iframePageTitle: String;
+
       beforeAll(async () => {
         await iframe.switchToMainPage();
+        iframePageTitle = await iframe.getSampleTitle();
       });
 
       it('Then should grab main page title again', async () => {
-        expect(await iframe.getSampleTitle()).toBe('Sample Iframe page');
+        expect(iframePageTitle).toBe('Sample Iframe page');
       });
     });
 
