@@ -13,7 +13,9 @@ describe('Given a page with Iframe', () => {
   });
 
   describe('And switch to the Iframe', () => {
+
     const personalInformationPage = new PersonalInformationPage();
+
     beforeAll(async () => {
       await iframe.switchToIframe();
     });
