@@ -26,6 +26,7 @@ describe('Given a page with Iframe', () => {
     });
 
     describe('When switch to main page', () => {
+
       let iframePageTitle : String;
 
       beforeAll(async () => {
